@@ -57,7 +57,12 @@ const Navbar = () => {
             <span className="black">NEWSIFY</span>
           </h1>
         </div>
-        {/* Removed desktop admin login */}
+       <Button
+          onClick={() => navigate('/admin/login')}
+          className="add-news-btn"
+        >
+          <i className="fa-solid fa-user-tie"></i>
+        </Button>
       </div>
 
       {/* ===== Desktop Nav Bar ===== */}
