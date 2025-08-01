@@ -32,14 +32,16 @@ const Add = () => {
   const [isVideoModalVisible, setIsVideoModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const beforeUploadImage = (file) => {
-    if (!file.type.startsWith('image/')) {
+  const beforeUploadImage = file => {
+    const isImage = file.type.startsWith('image/');
+    if (!isImage) {
       message.error('Only image files are allowed!');
       return Upload.LIST_IGNORE;
     }
+
     const reader = new FileReader();
-    reader.onload = (e) => {
-      setPreviews((prev) => [
+    reader.onload = e => {
+      setPreviews(prev => [
         ...prev,
         {
           raw: e.target.result,
@@ -51,10 +53,11 @@ const Add = () => {
       ]);
     };
     reader.readAsDataURL(file);
-    return false; // Prevent auto upload
+
+    return false; // prevent auto upload
   };
 
-  const handleUploadOne = async (index) => {
+  const handleUploadOne = async index => {
     const preview = previews[index];
     if (!preview?.file) return;
 
@@ -64,22 +67,23 @@ const Add = () => {
     try {
       const res = await axios.post(`${BASE_URL}/api/upload`, formData);
       const uploadedUrl = res.data.urls?.[0] || res.data.url;
-      setUploadedUrls((prev) => [...prev, uploadedUrl]);
+      setUploadedUrls(prev => [...prev, uploadedUrl]);
       message.success(`Image ${index + 1} uploaded!`);
     } catch (err) {
-      console.error(err);
+      console.error('Upload failed:', err);
       message.error('Image upload failed.');
     }
   };
 
-  const beforeUploadVideo = (file) => {
-    if (!file.type.startsWith('video/')) {
+  const beforeUploadVideo = file => {
+    const isVideo = file.type.startsWith('video/');
+    if (!isVideo) {
       message.error('Only video files are allowed!');
       return Upload.LIST_IGNORE;
     }
     setVideoFile(file);
     message.success(`Selected video: ${file.name}`);
-    return false; // Prevent auto upload
+    return false; // prevent auto upload
   };
 
   const handleUploadVideo = async () => {
@@ -95,12 +99,12 @@ const Add = () => {
       setVideoUrl(res.data.url);
       message.success('Video uploaded successfully!');
     } catch (err) {
-      console.error(err);
+      console.error('Video upload failed:', err);
       message.error('Video upload failed.');
     }
   };
 
-  const onFinish = async (values) => {
+  const onFinish = async values => {
     if (uploadedUrls.length === 0) {
       return message.warning('Please upload at least one image.');
     }
@@ -118,7 +122,7 @@ const Add = () => {
       message.success('News added successfully!');
       navigate('/admin/list');
     } catch (err) {
-      console.error(err);
+      console.error('Add failed:', err);
       message.error('Failed to add news.');
     } finally {
       setLoading(false);
@@ -126,7 +130,7 @@ const Add = () => {
   };
 
   const updatePreviewControl = (index, key, value) => {
-    setPreviews((prev) =>
+    setPreviews(prev =>
       prev.map((item, idx) =>
         idx === index ? { ...item, [key]: value } : item
       )
@@ -167,7 +171,7 @@ const Add = () => {
               name="category"
               rules={[{ required: true, message: 'Please select a category!' }]}
             >
-              <Select placeholder="Select a category">
+              <Select placeholder="Select a category" allowClear>
                 <Option value="sports">Sports</Option>
                 <Option value="health">Health</Option>
                 <Option value="education">Education</Option>
@@ -215,7 +219,7 @@ const Add = () => {
                             max="2"
                             step="0.01"
                             value={preview.zoom}
-                            onChange={(e) =>
+                            onChange={e =>
                               updatePreviewControl(
                                 index,
                                 'zoom',
@@ -231,7 +235,7 @@ const Add = () => {
                             min="-100"
                             max="100"
                             value={preview.offsetX}
-                            onChange={(e) =>
+                            onChange={e =>
                               updatePreviewControl(
                                 index,
                                 'offsetX',
@@ -247,7 +251,7 @@ const Add = () => {
                             min="-100"
                             max="100"
                             value={preview.offsetY}
-                            onChange={(e) =>
+                            onChange={e =>
                               updatePreviewControl(
                                 index,
                                 'offsetY',
@@ -258,14 +262,15 @@ const Add = () => {
                         </div>
                       </div>
 
-                      <Button
-                        type="primary"
-                        icon={<CloudUploadOutlined />}
-                        onClick={() => handleUploadOne(index)}
-                        style={{ marginTop: 10 }}
-                      >
-                        Upload Image {index + 1}
-                      </Button>
+                      <div>
+                        <Button
+                          type="primary"
+                          icon={<CloudUploadOutlined />}
+                          onClick={() => handleUploadOne(index)}
+                        >
+                          Upload Image {index + 1}
+                        </Button>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -282,29 +287,28 @@ const Add = () => {
               </Upload>
 
               {videoFile && (
-                <Button
-                  type="primary"
-                  icon={<CloudUploadOutlined />}
-                  onClick={handleUploadVideo}
-                  style={{ marginTop: 10 }}
-                >
-                  Upload Video
-                </Button>
+                <div style={{ marginTop: 10 }}>
+                  <Button
+                    type="primary"
+                    icon={<CloudUploadOutlined />}
+                    onClick={handleUploadVideo}
+                  >
+                    Upload Video
+                  </Button>
+                </div>
               )}
 
               {videoUrl && (
-                <Button
-                  type="primary"
-                  icon={<VideoCameraOutlined />}
-                  style={{
-                    backgroundColor: '#2a53c1',
-                    border: 'none',
-                    marginTop: 10,
-                  }}
-                  onClick={() => setIsVideoModalVisible(true)}
-                >
-                  Play Uploaded Video
-                </Button>
+                <div style={{ marginTop: 10 }}>
+                  <Button
+                    type="primary"
+                    icon={<VideoCameraOutlined />}
+                    style={{ backgroundColor: '#2a53c1', border: 'none' }}
+                    onClick={() => setIsVideoModalVisible(true)}
+                  >
+                    Play Uploaded Video
+                  </Button>
+                </div>
               )}
             </Form.Item>
 
