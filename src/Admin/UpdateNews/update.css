@@ -1,0 +1,52 @@
+.update-news-form {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  flex-wrap: wrap;
+}
+
+.form-left,
+.form-right {
+  flex: 1;
+  min-width: 300px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.image-preview {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  margin-top: 12px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+}
+
+.update-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #1677ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}

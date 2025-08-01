@@ -1,0 +1,224 @@
+/* ====== Base Reset ====== */
+body {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ====== Logo Style ====== */
+.navbar-logo {
+  height: 60px;
+  object-fit: contain;
+}
+
+/* ====== Desktop Header (Date, Title, Admin Button) ====== */
+.navbar-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #000000;
+  flex-wrap: wrap;
+}
+
+.navbar-date {
+  color: white;
+  font-size: 19px;
+  margin-bottom: 5px;
+  font-weight: bolder;
+}
+
+.navbar-title h1 {
+  margin: 0;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.black {
+  color: white;
+}
+
+.red {
+  color: #ff4757;
+}
+
+.tagline {
+  font-size: 14px;
+  color: white;
+  margin: 0;
+  text-align: center;
+}
+
+.add-news-btn {
+  background-color: white;
+  color: #2a53c1;
+  border: none;
+  font-size: 18px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-news-btn:hover {
+  background-color: #dbeafe;
+  color: #1d3fa8;
+}
+
+/* ====== Desktop NavBar ====== */
+.nav-bar {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: #000000;
+  padding: 10px 20px;
+  gap: 20px;
+  scrollbar-width: none;
+  border-bottom: 9px solid #8dc63f;
+}
+
+.nav-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-bar p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #ffffff;
+  padding: 6px 10px;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.nav-bar p:hover {
+  background-color: #e0e7ff;
+  color: #1d4ed8;
+}
+
+/* ====== Fixed Navbar Container ====== */
+.fixed-navbar-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  background-color: #000000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== Page Body Pushdown ====== */
+.body-content {
+  margin-top: 130px;
+}
+
+/* ====== Mobile Topbar ====== */
+.mobile-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000000;
+  padding: 10px 20px;
+  height: 70px;
+  border-bottom: 3px solid  #8dc63f;
+
+}
+
+.subscribe-btn {
+  background-color: #8dc63f;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+}
+
+.hamburger-icon {
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
+}
+
+/* ====== Mobile Drawer Content ====== */
+.drawer-top-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+
+.drawer-links-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.drawer-link {
+  font-size: 17px;
+  font-weight: 500;
+  color: #111;
+  padding: 6px 0;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.drawer-link i {
+  margin-right: 8px;
+  color: #555;
+}
+
+.drawer-link:hover {
+  color: #1d4ed8;
+}
+
+/* ====== Responsive Rules ====== */
+
+/* Mobile only rules */
+@media (max-width: 768px) {
+  .navbar-heading {
+    display: none;
+  }
+
+  .mobile-topbar {
+    display: flex;
+  }
+
+  .nav-bar.desktop-only {
+    display: none;
+  }
+
+  .navbar-title h1 {
+    font-size: 24px;
+  }
+
+  .add-news-btn {
+    align-self: center;
+  }
+
+  .tagline {
+    padding-left: 0;
+  }
+
+  .nav-bar {
+    justify-content: flex-start;
+  }
+}
+
+/* Desktop only rules */
+@media (min-width: 769px) {
+  .mobile-topbar {
+    display: none;
+    height: 70px;
+  }
+
+  .nav-bar {
+    justify-content: center;
+  }
+}

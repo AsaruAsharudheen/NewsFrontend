@@ -1,0 +1,50 @@
+.add-container {
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+}
+
+.add-card {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  border-radius: 16px;
+  padding: 24px;
+  /* background-color: #000000; */
+}
+.admin-panel-heading {
+  background-color: #1e3a8a; /* dark blue */
+  color: #ffffff;
+  font-size: 32px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  margin-top: 20px;
+  letter-spacing: 1px;
+  transition: transform 0.3s ease;
+}
+
+.admin-panel-heading:hover {
+  transform: scale(1.02);
+}
+
+@media screen and (max-width: 768px) {
+  .add-container {
+    padding: 10px;
+  }
+
+  .add-card {
+    padding: 16px;
+  }
+}
+.add-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 24px;
+}
+
+.add-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+}

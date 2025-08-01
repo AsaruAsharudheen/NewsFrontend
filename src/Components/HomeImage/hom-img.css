@@ -1,0 +1,47 @@
+.homeimg {
+  width: 100%;
+  overflow: hidden;
+}
+
+.homeimg .ant-carousel {
+  width: 100%;
+  height: 100%;
+}
+
+.homeimg .ant-carousel .slick-slide {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+}
+
+.homeimg img {
+  width: 100%;
+  max-width: 100%;
+  height: 80vh;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tablet Devices */
+@media (max-width: 1024px) {
+  .homeimg img {
+    height: 60vh;
+  }
+}
+
+/* Mobile Devices */
+@media (max-width: 768px) {
+  .homeimg img {
+    height: 50vh;
+    width: 350px;
+    
+  }
+}
+
+/* Very Small Mobile Devices */
+@media (max-width: 480px) {
+  .homeimg img {
+    height: 40vh;
+    padding-right: 100px;
+  }
+}

@@ -1,0 +1,147 @@
+.education-section {
+  padding: 89px 12%;
+  background-color: #fff;
+}
+
+.education-section-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+.education-news-listing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+
+.education-news-card {
+  background-color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.education-news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+.education-news-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.education-news-content {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.education-news-category {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f7d00;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
+}
+
+.education-news-category::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #0f7d00;
+}
+
+.education-news-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.education-news-summary {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.education-news-date {
+  font-size: 12px;
+  color: #777;
+  margin-top: auto;
+}
+
+.education-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.education-empty-state {
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* Responsive layout */
+@media (max-width: 1024px) {
+  .education-news-listing {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .education-section {
+ padding: 40px 2%;
+  }
+
+  .education-news-listing {
+    grid-template-columns: 1fr;
+  }
+
+  .education-news-image {
+    height: 230px;
+  }
+
+  .education-news-title {
+    font-size: 18px;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .education-news-category {
+    font-size: 18px;
+  }
+
+  .education-news-summary {
+    font-size: 13px;
+    display: none;
+  }
+
+  .education-news-content {
+    padding: 12px 14px;
+  }
+
+  .education-news-date {
+    font-size: 11px;
+  }
+}

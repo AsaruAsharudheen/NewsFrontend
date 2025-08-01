@@ -1,0 +1,171 @@
+/* SECTION WRAPPER */
+.politics-section {
+  padding: 80px 10%;
+  background-color: #fff;
+  margin-left: 80px;
+  margin-right: 70px;
+}
+
+/* HEADING */
+
+/* GRID LISTING */
+.politics-news-listing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+
+/* NEWS CARD */
+.politics-news-card {
+  background-color: #fff;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.politics-news-card:hover {
+  transform: translateY(-6px);
+}
+
+/* IMAGE */
+.politics-news-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* CONTENT */
+.politics-news-content {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* CATEGORY LABEL */
+.politics-news-category {
+  font-size: 20px;
+  font-weight: 600;
+  color: #c1272d; /* Red for politics */
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  position: relative;
+  display: inline-block;
+}
+
+.politics-news-category::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background-color: #c1272d;
+}
+
+/* TITLE */
+.politics-news-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+/* SUMMARY */
+.politics-news-summary {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 12px;
+  font-family: 'Anek Malayalam', sans-serif;
+}
+
+/* DATE */
+.politics-news-date {
+  font-size: 12px;
+  color: #777;
+  margin-top: auto;
+  font-style: italic;
+}
+
+/* LOADER */
+.politics-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+/* EMPTY STATE */
+.politics-empty-state {
+  text-align: center;
+  padding: 40px 0;
+}
+
+.politics-section-title {
+  font-family: 'Monoton', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* RESPONSIVE STYLES */
+@media (max-width: 1024px) {
+  .politics-news-listing {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .politics-news-listing {
+    grid-template-columns: 1fr;
+  }
+
+  .politics-section {
+    padding: 24px 16px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .politics-news-image {
+    height: 230px;
+  }
+
+  .politics-news-title {
+    font-size: 18px;
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .politics-news-category {
+    font-size: 16px;
+  }
+
+  .politics-news-summary {
+    font-size: 13px;
+    display: none;
+  }
+
+  .politics-news-content {
+    padding: 12px 14px;
+  }
+
+  .politics-news-date {
+    font-size: 11px;
+  }
+}
+
+.politics-section-title {
+  font-family: 'Monoton', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 70px;
+}

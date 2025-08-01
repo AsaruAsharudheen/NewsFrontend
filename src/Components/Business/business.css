@@ -1,0 +1,203 @@
+/* ====== MAIN CONTAINER ====== */
+.business-section {
+  padding: 85px 13%;
+  background-color: #fff;
+  margin: 0 auto;
+  /* max-width: 1840px; */
+}
+
+/* ====== SECTION HEADING ====== */
+.business-section-title {
+  font-family: "Train One", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 70px;
+  text-align: center;
+  /* margin-bottom: 10px; */
+  color: #111;
+}
+
+/* ====== GRID LAYOUT ====== */
+.business-news-listing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px;
+}
+
+/* ====== CARD STYLES ====== */
+.business-news-card {
+  background-color: #fff;
+  overflow: hidden;
+  
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.business-news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ====== IMAGE ====== */
+.business-news-image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* ====== CONTENT AREA ====== */
+.business-news-content {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ====== CATEGORY ====== */
+.business-news-category {
+  font-size: 20px;
+  font-weight: 600;
+  color: #0c6da7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.business-news-category::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 90px;
+  height: 2px;
+  background-color: #0c6da7;
+}
+
+/* ====== TITLE ====== */
+.business-news-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.5;
+  margin-bottom: 12px;
+  overflow-wrap: break-word;
+}
+
+/* ====== SUMMARY ====== */
+.business-news-summary {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+/* ====== DATE ====== */
+.business-news-date {
+  font-size: 12px;
+  color: #777;
+  margin-top: auto;
+  font-style: italic;
+}
+
+/* ====== LOADER & EMPTY ====== */
+.business-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+}
+
+.business-empty-state {
+  text-align: center;
+  padding: 40px 0;
+}
+
+/* ====== TABLET RESPONSIVE ====== */
+@media (max-width: 1024px) {
+  .business-news-listing {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .business-news-image {
+    height: 260px;
+  }
+}
+
+/* ====== MOBILE RESPONSIVE ====== */
+@media (max-width: 600px) {
+  .business-news-listing {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .business-section {
+    padding: 40px 16px;
+  }
+
+  .business-section-title {
+    font-size: 40px;
+    border-bottom-width: 3px;
+    /* margin-bottom: 24px; */
+    display: none;
+    
+  }
+
+  .business-news-image {
+    height: 200px;
+  }
+
+  .business-news-title {
+    font-size: 16px;
+    line-height: 1.4;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    display: -webkit-box;
+  }
+
+  .business-news-summary {
+    font-size: 13px;
+    display: none;
+  }
+
+  .business-news-category {
+    font-size: 16px;
+  }
+
+  .business-news-content {
+    padding: 12px 14px;
+  }
+
+  .business-news-date {
+    font-size: 11px;
+  }
+}
+.business-heading-row {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* space between text and line */
+  margin-bottom: 40px;
+}
+
+
+.heading-line {
+  flex-grow: 1;
+  height: 4px;
+  background-color: #000;
+  border-radius: 2px;
+  margin-top: 25px;
+}
+@media (max-width: 600px) {
+  .business-heading-row {
+    /* flex-direction: column; */
+  }
+
+  .heading-line {
+    width: 100%;
+    margin-top: 5px;
+  }
+}
