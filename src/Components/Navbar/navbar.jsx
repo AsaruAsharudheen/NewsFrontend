@@ -32,7 +32,7 @@ const Navbar = () => {
 
   const handleNavigate = path => {
     navigate(path);
-    setOpen(false); // Close drawer
+    setOpen(false); // Close drawer on nav
   };
 
   return (
@@ -57,12 +57,7 @@ const Navbar = () => {
             <span className="black">NEWSIFY</span>
           </h1>
         </div>
-        <Button
-          onClick={() => navigate('/admin/login')}
-          className="add-news-btn"
-        >
-          <i className="fa-solid fa-user-tie"></i>
-        </Button>
+        {/* Removed desktop admin login */}
       </div>
 
       {/* ===== Desktop Nav Bar ===== */}
@@ -83,8 +78,14 @@ const Navbar = () => {
         className="mobile-drawer"
         width={250}
       >
-        {/* Sign In + Search */}
-       
+        {/* Admin Login only on mobile */}
+        <Button
+          onClick={() => handleNavigate('/admin/login')}
+          className="drawer-admin-btn"
+          style={{ marginBottom: '16px', width: '100%' }}
+        >
+          <i className="fa-solid fa-user-tie"></i> Admin Login
+        </Button>
 
         {/* Menu Links */}
         <div className="drawer-links-list">
