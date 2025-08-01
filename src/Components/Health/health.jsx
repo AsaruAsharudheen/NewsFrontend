@@ -5,13 +5,24 @@ import Navbar from '../Navbar/navbar';
 import { useNavigate } from 'react-router-dom';
 import './health.css';
 
-// ✅ Use BASE_URL for consistent backend/API paths
 const BASE_URL = 'https://newsbackend-73b7.onrender.com';
 
 const Health = () => {
   const [healthNews, setHealthNews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    handleResize(); // set on mount
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const getHealthNews = async () => {
     try {
@@ -40,7 +51,12 @@ const Health = () => {
       <Navbar />
       <div className="health-section">
         <div className="health-heading-row">
-          <h1 className="health-section-title">HEALTH</h1>
+          <h1
+            className="health-section-title"
+            style={{ display: isMobile ? 'none' : 'block' }}
+          >
+            HEALTH
+          </h1>
           <span className="heading-line"></span>
         </div>
 
