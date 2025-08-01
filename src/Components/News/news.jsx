@@ -8,6 +8,9 @@ import RelatedNews from '../RelatedNews/related';
 
 const { Title, Paragraph } = Typography;
 
+// ✅ Use your Render backend
+const API_BASE = 'https://newsbackend-73b7.onrender.com';
+
 const News = () => {
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,7 +18,7 @@ const News = () => {
 
   const getNewsById = async () => {
     try {
-      const response = await axios.get(`http://localhost:8889/api/News/${id}`);
+      const response = await axios.get(`${API_BASE}/api/News/${id}`);
       setNews(response.data);
     } catch (error) {
       console.error('Error fetching news:', error);
@@ -42,8 +45,10 @@ const News = () => {
 
   const mainImage =
     news.images && news.images.length > 0
-      ? news.images[0]
-      : 'http://localhost:8889/images/no-image.jpg';
+      ? news.images[0].startsWith('http')
+        ? news.images[0]
+        : `${API_BASE}/${news.images[0]}`
+      : `${API_BASE}/images/no-image.jpg`;
 
   const otherImages =
     news.images && news.images.length > 1 ? news.images.slice(1) : [];
@@ -77,7 +82,7 @@ const News = () => {
               className="news-main-image"
               onError={e => {
                 e.target.onerror = null;
-                e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                e.target.src = `${API_BASE}/images/no-image.jpg`;
               }}
             />
           </div>
@@ -124,12 +129,16 @@ const News = () => {
             {otherImages.map((url, index) => (
               <img
                 key={index}
-                src={url}
+                src={
+                  url.startsWith('http')
+                    ? url
+                    : `${API_BASE}/${url}`
+                }
                 alt={`Additional ${index + 1}`}
                 className="news-summary-image"
                 onError={e => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                  e.target.src = `${API_BASE}/images/no-image.jpg`;
                 }}
               />
             ))}

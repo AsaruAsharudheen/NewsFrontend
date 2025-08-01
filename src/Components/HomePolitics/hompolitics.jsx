@@ -15,7 +15,7 @@ const HomePolitics = () => {
 
   const getPoliticsNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get('https://newsbackend-73b7.onrender.com/api/News');
       const politics = response.data.filter(
         item => item.category?.toLowerCase() === 'politics'
       );
@@ -69,15 +69,17 @@ const HomePolitics = () => {
             >
               <img
                 src={
-                  (item.images && item.images.length > 0
-                    ? item.images[0]
-                    : 'http://localhost:8889/images/no-image.jpg')
+                  item.images && item.images.length > 0
+                    ? item.images[0].startsWith('http')
+                      ? item.images[0]
+                      : `https://newsbackend-73b7.onrender.com/${item.images[0]}`
+                    : 'https://newsbackend-73b7.onrender.com/images/no-image.jpg'
                 }
                 alt={item.title}
                 className="home-politics-news-image"
                 onError={e => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                  e.target.src = 'https://newsbackend-73b7.onrender.com/images/no-image.jpg';
                 }}
               />
               <div className="home-politics-news-content">

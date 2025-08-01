@@ -10,9 +10,12 @@ const Pravasi = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // ✅ Replace localhost with Render backend
+  const API_BASE = 'https://newsbackend-73b7.onrender.com';
+
   const getPravasiNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${API_BASE}/api/News`);
       const pravasi = response.data.filter(
         item => item.category?.toLowerCase() === 'pravasi'
       );
@@ -61,14 +64,16 @@ const Pravasi = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
-                      ? item.images[0]
-                      : 'http://localhost:8889/images/no-image.jpg'
+                      ? item.images[0].startsWith('http')
+                        ? item.images[0]
+                        : `${API_BASE}/${item.images[0]}`
+                      : `${API_BASE}/images/no-image.jpg`
                   }
                   alt={item.title}
                   className="start-pravasi-news-image"
                   onError={e => {
                     e.target.onerror = null;
-                    e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                    e.target.src = `${API_BASE}/images/no-image.jpg`;
                   }}
                 />
                 <div className="start-pravasi-news-content">

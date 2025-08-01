@@ -17,6 +17,9 @@ import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const { Title } = Typography;
 
+// ✅ Use central base URL — change once, works everywhere
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
+
 const List = () => {
   const [listNews, setListNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,10 +27,11 @@ const List = () => {
 
   const getListNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${BASE_URL}/api/News`);
       setListNews(response.data);
     } catch (err) {
       console.error('Error fetching news list:', err);
+      message.error('Failed to fetch news list');
     } finally {
       setLoading(false);
     }
@@ -35,7 +39,7 @@ const List = () => {
 
   const deleteById = async id => {
     try {
-      await axios.delete(`http://localhost:8889/api/News/${id}`);
+      await axios.delete(`${BASE_URL}/api/News/${id}`);
       message.success('News item deleted successfully');
       getListNews();
     } catch (err) {
@@ -71,14 +75,17 @@ const List = () => {
                     <img
                       src={
                         item.images && item.images.length > 0
-                          ? (item.images[0].startsWith('http')
-                              ? item.images[0]
-                              : `http://localhost:8889/${item.images[0]}`
-                            )
-                          : 'http://localhost:8889/images/no-image.jpg'
+                          ? item.images[0].startsWith('http')
+                            ? item.images[0]
+                            : `${BASE_URL}/${item.images[0]}`
+                          : `${BASE_URL}/images/no-image.jpg`
                       }
                       alt={item.title}
                       className="news-image-item"
+                      onError={e => {
+                        e.target.onerror = null;
+                        e.target.src = `${BASE_URL}/images/no-image.jpg`;
+                      }}
                     />
                   }
                   actions={[
@@ -92,7 +99,7 @@ const List = () => {
                       <DeleteOutlined style={{ color: 'red' }} />
                     </Popconfirm>,
                     <EditOutlined
-                      style={{ color: 'red' }}
+                      style={{ color: '#1890ff' }}
                       onClick={() => navigate(`/update/${item._id}`)}
                       key="edit"
                     />,

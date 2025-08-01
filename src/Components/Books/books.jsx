@@ -5,6 +5,9 @@ import Navbar from '../Navbar/navbar';
 import { useNavigate } from 'react-router-dom';
 import './books.css';
 
+// ✅ Centralize backend URL for deployment
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
+
 const Books = () => {
   const [booksNews, setBooksNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +15,7 @@ const Books = () => {
 
   const getBooksNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${BASE_URL}/api/News`);
       const books = response.data.filter(
         item => item.category?.toLowerCase() === 'books'
       );
@@ -61,14 +64,16 @@ const Books = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
-                      ? item.images[0]
-                      : 'http://localhost:8889/images/no-image.jpg'
+                      ? item.images[0].startsWith('http')
+                        ? item.images[0]
+                        : `${BASE_URL}/${item.images[0]}`
+                      : `${BASE_URL}/images/no-image.jpg`
                   }
                   alt={item.title}
                   className="start-books-news-image"
                   onError={e => {
                     e.target.onerror = null;
-                    e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                    e.target.src = `${BASE_URL}/images/no-image.jpg`;
                   }}
                 />
                 <div className="start-books-news-content">

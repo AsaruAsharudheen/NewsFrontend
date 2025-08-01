@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Row, Col, Typography, Spin, Empty } from 'antd';
+import { Row, Col, Spin, Empty } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import './homelatest.css';
-
-const { Title } = Typography;
 
 const HomeLatest = () => {
   const [latestNews, setLatestNews] = useState([]);
@@ -14,7 +12,7 @@ const HomeLatest = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await axios.get('http://localhost:8889/api/News/New');
+        const response = await axios.get('https://newsbackend-73b7.onrender.com/api/News/New');
         setLatestNews(response.data);
       } catch (err) {
         console.error('Failed to fetch latest news', err);
@@ -64,8 +62,10 @@ const HomeLatest = () => {
               className="home-latest-main-image"
               src={
                 mainNews.images && mainNews.images.length > 0
-                  ? mainNews.images[0]
-                  : 'http://localhost:8889/images/no-image.jpg'
+                  ? mainNews.images[0].startsWith('http')
+                    ? mainNews.images[0]
+                    : `https://newsbackend-73b7.onrender.com/${mainNews.images[0]}`
+                  : 'https://newsbackend-73b7.onrender.com/images/no-image.jpg'
               }
               alt={mainNews.title}
             />
@@ -93,8 +93,10 @@ const HomeLatest = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
-                      ? item.images[0]
-                      : 'http://localhost:8889/images/no-image.jpg'
+                      ? item.images[0].startsWith('http')
+                        ? item.images[0]
+                        : `https://newsbackend-73b7.onrender.com/${item.images[0]}`
+                      : 'https://newsbackend-73b7.onrender.com/images/no-image.jpg'
                   }
                   alt={item.title}
                 />
@@ -128,8 +130,10 @@ const HomeLatest = () => {
             <img
               src={
                 item.images && item.images.length > 0
-                  ? item.images[0]
-                  : 'http://localhost:8889/images/no-image.jpg'
+                  ? item.images[0].startsWith('http')
+                    ? item.images[0]
+                    : `https://newsbackend-73b7.onrender.com/${item.images[0]}`
+                  : 'https://newsbackend-73b7.onrender.com/images/no-image.jpg'
               }
               alt={item.title}
             />

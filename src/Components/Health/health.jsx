@@ -5,6 +5,9 @@ import Navbar from '../Navbar/navbar';
 import { useNavigate } from 'react-router-dom';
 import './health.css';
 
+// ✅ Use BASE_URL for consistent backend/API paths
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
+
 const Health = () => {
   const [healthNews, setHealthNews] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,7 +15,7 @@ const Health = () => {
 
   const getHealthNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${BASE_URL}/api/News`);
       const health = response.data.filter(
         item => item.category?.toLowerCase() === 'health'
       );
@@ -63,11 +66,15 @@ const Health = () => {
                     item.images && item.images.length > 0
                       ? item.images[0].startsWith('http')
                         ? item.images[0]
-                        : `http://localhost:8889/${item.images[0]}`
-                      : 'http://localhost:8889/images/no-image.jpg'
+                        : `${BASE_URL}/${item.images[0]}`
+                      : `${BASE_URL}/images/no-image.jpg`
                   }
                   alt={item.title}
                   className="health-news-image"
+                  onError={e => {
+                    e.target.onerror = null;
+                    e.target.src = `${BASE_URL}/images/no-image.jpg`;
+                  }}
                 />
                 <div className="health-news-content">
                   <div className="health-news-category">Health</div>

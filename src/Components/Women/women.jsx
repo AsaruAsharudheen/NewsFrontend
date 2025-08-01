@@ -10,9 +10,11 @@ const Women = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const API_BASE = 'https://newsbackend-73b7.onrender.com'; // ✅ your Render backend base URL
+
   const getWomenNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${API_BASE}/api/News`);
       const women = response.data.filter(
         item => item.category?.toLowerCase() === 'women'
       );
@@ -61,14 +63,14 @@ const Women = () => {
                 <img
                   src={
                     item.images && item.images.length > 0
-                      ? item.images[0]
-                      : 'http://localhost:8889/images/no-image.jpg'
+                      ? `${API_BASE}${item.images[0]}`
+                      : `${API_BASE}/images/no-image.jpg`
                   }
                   alt={item.title}
                   className="start-women-news-image"
                   onError={e => {
                     e.target.onerror = null;
-                    e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                    e.target.src = `${API_BASE}/images/no-image.jpg`;
                   }}
                 />
                 <div className="start-women-news-content">

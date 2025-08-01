@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Spin, Empty, Typography, Button } from 'antd';
+import { Spin, Empty, Button } from 'antd';
 import { LikeOutlined, LikeFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import './homeducation.css';
 
-const { Title } = Typography;
+// ✅ Optional: Move this to config.js for reuse
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
 
 const HomeEducation = () => {
   const [educationNews, setEducationNews] = useState([]);
@@ -15,7 +16,7 @@ const HomeEducation = () => {
 
   const getEducationNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${BASE_URL}/api/News`);
       const education = response.data.filter(
         item => item.category?.toLowerCase() === 'education'
       );
@@ -69,15 +70,17 @@ const HomeEducation = () => {
             >
               <img
                 src={
-                  (item.images && item.images.length > 0
-                    ? item.images[0]
-                    : 'http://localhost:8889/images/no-image.jpg')
+                  item.images && item.images.length > 0
+                    ? item.images[0].startsWith('http')
+                      ? item.images[0]
+                      : `${BASE_URL}/${item.images[0]}`
+                    : `${BASE_URL}/images/no-image.jpg`
                 }
                 alt={item.title}
                 className="home-education-news-image"
                 onError={e => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                  e.target.src = `${BASE_URL}/images/no-image.jpg`;
                 }}
               />
               <div className="home-education-news-content">

@@ -21,9 +21,11 @@ import './add.css';
 
 const { Option } = Select;
 
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
+
 const Add = () => {
   const navigate = useNavigate();
-  const [previews, setPreviews] = useState([]); // Images
+  const [previews, setPreviews] = useState([]);
   const [uploadedUrls, setUploadedUrls] = useState([]);
   const [videoFile, setVideoFile] = useState(null);
   const [videoUrl, setVideoUrl] = useState('');
@@ -43,7 +45,7 @@ const Add = () => {
         ...prev,
         {
           raw: e.target.result,
-          file: file,
+          file,
           zoom: 1,
           offsetX: 0,
           offsetY: 0,
@@ -52,7 +54,7 @@ const Add = () => {
     };
     reader.readAsDataURL(file);
 
-    return false;
+    return false; // prevent auto upload
   };
 
   const handleUploadOne = async index => {
@@ -63,16 +65,13 @@ const Add = () => {
     formData.append('images', preview.file);
 
     try {
-      const res = await axios.post(
-        'http://localhost:8889/api/upload',
-        formData
-      );
+      const res = await axios.post(`${BASE_URL}/api/upload`, formData);
       const uploadedUrl = res.data.urls?.[0] || res.data.url;
       setUploadedUrls(prev => [...prev, uploadedUrl]);
       message.success(`Image ${index + 1} uploaded!`);
     } catch (err) {
       console.error('Upload failed:', err);
-      message.error('Upload failed.');
+      message.error('Image upload failed.');
     }
   };
 
@@ -84,7 +83,7 @@ const Add = () => {
     }
     setVideoFile(file);
     message.success(`Selected video: ${file.name}`);
-    return false;
+    return false; // prevent auto upload
   };
 
   const handleUploadVideo = async () => {
@@ -96,10 +95,7 @@ const Add = () => {
     formData.append('video', videoFile);
 
     try {
-      const res = await axios.post(
-        'http://localhost:8889/api/uploadVideo',
-        formData
-      );
+      const res = await axios.post(`${BASE_URL}/api/uploadVideo`, formData);
       setVideoUrl(res.data.url);
       message.success('Video uploaded successfully!');
     } catch (err) {
@@ -122,7 +118,7 @@ const Add = () => {
 
     try {
       setLoading(true);
-      await axios.post('http://localhost:8889/api/News', payload);
+      await axios.post(`${BASE_URL}/api/News`, payload);
       message.success('News added successfully!');
       navigate('/admin/list');
     } catch (err) {
@@ -201,57 +197,20 @@ const Add = () => {
               </Upload>
 
               {previews.length > 0 && (
-                <div
-                  style={{
-                    marginTop: 16,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 24,
-                  }}
-                >
+                <div className="previews-list">
                   {previews.map((preview, index) => (
-                    <div key={index}>
-                      <div
-                        style={{
-                          width: '100%',
-                          maxWidth: '600px',
-                          aspectRatio: '16 / 9',
-                          border: '1px solid #ccc',
-                          borderRadius: 8,
-                          overflow: 'hidden',
-                          backgroundColor: '#f0f0f0',
-                          display: 'flex',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}
-                      >
+                    <div key={index} className="preview-item">
+                      <div className="preview-frame">
                         <div
                           style={{
                             transform: `scale(${preview.zoom}) translate(${preview.offsetX}px, ${preview.offsetY}px)`,
-                            transition: 'transform 0.3s ease',
                           }}
                         >
-                          <img
-                            src={preview.raw}
-                            alt={`Preview ${index}`}
-                            style={{
-                              display: 'block',
-                              maxWidth: '100%',
-                              maxHeight: '100%',
-                              objectFit: 'contain',
-                            }}
-                          />
+                          <img src={preview.raw} alt={`Preview ${index}`} />
                         </div>
                       </div>
 
-                      <div
-                        style={{
-                          marginTop: 16,
-                          display: 'flex',
-                          gap: 16,
-                          flexWrap: 'wrap',
-                        }}
-                      >
+                      <div className="preview-controls">
                         <div>
                           <label>Zoom:</label>
                           <input
@@ -303,13 +262,13 @@ const Add = () => {
                         </div>
                       </div>
 
-                      <div style={{ marginTop: 10 }}>
+                      <div>
                         <Button
                           type="primary"
                           icon={<CloudUploadOutlined />}
                           onClick={() => handleUploadOne(index)}
                         >
-                          Upload Image {index + 1} to Server
+                          Upload Image {index + 1}
                         </Button>
                       </div>
                     </div>
@@ -326,6 +285,7 @@ const Add = () => {
               >
                 <Button icon={<VideoCameraOutlined />}>Choose Video</Button>
               </Upload>
+
               {videoFile && (
                 <div style={{ marginTop: 10 }}>
                   <Button
@@ -337,16 +297,13 @@ const Add = () => {
                   </Button>
                 </div>
               )}
+
               {videoUrl && (
                 <div style={{ marginTop: 10 }}>
                   <Button
                     type="primary"
                     icon={<VideoCameraOutlined />}
-                    style={{
-                      backgroundColor: '#2a53c1',
-                      border: 'none',
-                      fontWeight: 'bold',
-                    }}
+                    style={{ backgroundColor: '#2a53c1', border: 'none' }}
                     onClick={() => setIsVideoModalVisible(true)}
                   >
                     Play Uploaded Video

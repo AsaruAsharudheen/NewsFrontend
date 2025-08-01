@@ -11,9 +11,11 @@ const Sports = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const API_BASE = 'https://newsbackend-73b7.onrender.com'; // ✅ use your Render backend
+
   const getSportsNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get(`${API_BASE}/api/News`);
       const sports = response.data.filter(
         item => item.category?.toLowerCase() === 'sports'
       );
@@ -61,14 +63,14 @@ const Sports = () => {
                 <img
                   alt={item.title}
                   src={
-                    (item.images && item.images.length > 0
-                      ? item.images[0]
-                      : 'http://localhost:8889/images/no-image.jpg')
+                    item.images && item.images.length > 0
+                      ? `${API_BASE}${item.images[0]}`
+                      : `${API_BASE}/images/no-image.jpg`
                   }
                   className="sports-news-image"
                   onError={e => {
                     e.target.onerror = null;
-                    e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                    e.target.src = `${API_BASE}/images/no-image.jpg`;
                   }}
                 />
                 <div className="sports-news-content">

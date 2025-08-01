@@ -13,6 +13,9 @@ import './update.css';
 
 const { Option } = Select;
 
+// ✅ Centralize API base URL for local or production switch
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
+
 const UpdateNews = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -31,7 +34,7 @@ const UpdateNews = () => {
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get(`http://localhost:8889/api/News/${id}`);
+        const res = await axios.get(`${BASE_URL}/api/News/${id}`);
         setNews(res.data);
         setVideoUrl(res.data.video || '');
       } catch (err) {
@@ -51,8 +54,7 @@ const UpdateNews = () => {
   };
 
   const beforeUploadImage = file => {
-    const isImage = file.type.startsWith('image/');
-    if (!isImage) {
+    if (!file.type.startsWith('image/')) {
       message.error('Only image files are allowed!');
       return Upload.LIST_IGNORE;
     }
@@ -64,10 +66,7 @@ const UpdateNews = () => {
     formData.append('images', file);
 
     try {
-      const res = await axios.post(
-        'http://localhost:8889/api/upload',
-        formData
-      );
+      const res = await axios.post(`${BASE_URL}/api/upload`, formData);
       const uploadedUrl = res.data.urls?.[0] || res.data.url;
 
       setNews(prev => ({
@@ -90,10 +89,8 @@ const UpdateNews = () => {
     message.info('Image removed');
   };
 
-  // VIDEO: select file
   const beforeUploadVideo = file => {
-    const isVideo = file.type.startsWith('video/');
-    if (!isVideo) {
+    if (!file.type.startsWith('video/')) {
       message.error('Only video files are allowed!');
       return Upload.LIST_IGNORE;
     }
@@ -102,7 +99,6 @@ const UpdateNews = () => {
     return false;
   };
 
-  // VIDEO: upload to backend
   const handleUploadVideo = async () => {
     if (!videoFile) {
       return message.warning('Please select a video first.');
@@ -112,10 +108,7 @@ const UpdateNews = () => {
     formData.append('video', videoFile);
 
     try {
-      const res = await axios.post(
-        'http://localhost:8889/api/uploadVideo',
-        formData
-      );
+      const res = await axios.post(`${BASE_URL}/api/uploadVideo`, formData);
       setVideoUrl(res.data.url);
       message.success('Video uploaded successfully!');
     } catch (err) {
@@ -136,7 +129,7 @@ const UpdateNews = () => {
         video: videoUrl,
       };
 
-      await axios.patch(`http://localhost:8889/api/News/${id}`, payload);
+      await axios.patch(`${BASE_URL}/api/News/${id}`, payload);
       message.success('News updated successfully');
       navigate('/admin/list');
     } catch (err) {
@@ -192,12 +185,12 @@ const UpdateNews = () => {
               <Option value="Business">Business</Option>
               <Option value="Health">Health</Option>
               <Option value="Education">Education</Option>
-              <Option value="food">Food</Option>
-              <Option value="women">Women</Option>
-              <Option value="pravasi">Pravasi</Option>
-              <Option value="culture">Culture</Option>
-              <Option value="opinion">Opinion</Option>
-              <Option value="books">Books</Option>
+              <Option value="Food">Food</Option>
+              <Option value="Women">Women</Option>
+              <Option value="Pravasi">Pravasi</Option>
+              <Option value="Culture">Culture</Option>
+              <Option value="Opinion">Opinion</Option>
+              <Option value="Books">Books</Option>
             </Select>
           </div>
         </div>
@@ -217,48 +210,19 @@ const UpdateNews = () => {
             </ImgCrop>
 
             {news.images.length > 0 && (
-              <div
-                className="image-preview-group"
-                style={{
-                  display: 'flex',
-                  gap: 12,
-                  flexWrap: 'wrap',
-                  marginTop: 10,
-                }}
-              >
+              <div className="image-preview-group">
                 {news.images.map((img, idx) => (
-                  <div
-                    key={idx}
-                    style={{
-                      position: 'relative',
-                      display: 'inline-block',
-                    }}
-                  >
+                  <div key={idx} className="image-preview-wrapper">
                     <img
                       src={img}
                       alt={`News ${idx}`}
                       className="image-preview"
-                      style={{
-                        width: 200,
-                        height: 120,
-                        objectFit: 'cover',
-                        borderRadius: 8,
-                        border: '1px solid #ddd',
-                      }}
                     />
                     <Button
                       size="small"
                       danger
                       type="primary"
                       onClick={() => handleDeleteImage(idx)}
-                      style={{
-                        position: 'absolute',
-                        top: 5,
-                        right: 5,
-                        padding: '0 6px',
-                        lineHeight: '20px',
-                        height: 'auto',
-                      }}
                     >
                       X
                     </Button>

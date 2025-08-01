@@ -1,11 +1,9 @@
 import './homsports.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Spin, Empty, Typography, Button } from 'antd';
+import { Spin, Empty, Button } from 'antd';
 import { LikeOutlined, LikeFilled } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-
-const { Title } = Typography;
 
 const HomSports = () => {
   const [sportsNews, setSportsNews] = useState([]);
@@ -15,14 +13,14 @@ const HomSports = () => {
 
   const getSportsNews = async () => {
     try {
-      const response = await axios.get('http://localhost:8889/api/News');
+      const response = await axios.get('https://newsbackend-73b7.onrender.com/api/News');
       const sports = response.data.filter(
-        item => item.category?.toLowerCase() === 'sports'
+        (item) => item.category?.toLowerCase() === 'sports'
       );
       setSportsNews(sports);
 
       const initialLikes = {};
-      sports.slice(0, 3).forEach(item => {
+      sports.slice(0, 3).forEach((item) => {
         initialLikes[item._id] = false;
       });
       setLikes(initialLikes);
@@ -33,14 +31,14 @@ const HomSports = () => {
     }
   };
 
-  const handleLike = id => {
-    setLikes(prev => ({
+  const handleLike = (id) => {
+    setLikes((prev) => ({
       ...prev,
       [id]: !prev[id],
     }));
   };
 
-  const onCardClick = id => {
+  const onCardClick = (id) => {
     navigate(`/news/${id}`);
   };
 
@@ -61,7 +59,7 @@ const HomSports = () => {
         />
       ) : (
         <div className="home-sports-news-listing">
-          {sportsNews.slice(0, 3).map(item => (
+          {sportsNews.slice(0, 3).map((item) => (
             <div
               key={item._id}
               className="home-sports-news-card"
@@ -69,15 +67,16 @@ const HomSports = () => {
             >
               <img
                 src={
-                  (item.images && item.images.length > 0
+                  item.images && item.images.length > 0
                     ? item.images[0]
-                    : 'http://localhost:8889/images/no-image.jpg')
+                    : 'https://newsbackend-73b7.onrender.com/images/no-image.jpg'
                 }
                 alt={item.title}
                 className="home-sports-news-image"
-                onError={e => {
+                onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:8889/images/no-image.jpg';
+                  e.target.src =
+                    'https://newsbackend-73b7.onrender.com/images/no-image.jpg';
                 }}
               />
               <div className="home-sports-news-content">
@@ -88,7 +87,7 @@ const HomSports = () => {
                     ? item.summary.slice(0, 100) + '...'
                     : item.summary}
                 </div>
-                <div className="home-sports-news-date">
+                <div className="home-sports-news-like">
                   <Button
                     type="text"
                     icon={
@@ -98,7 +97,7 @@ const HomSports = () => {
                         <LikeOutlined />
                       )
                     }
-                    onClick={e => {
+                    onClick={(e) => {
                       e.stopPropagation();
                       handleLike(item._id);
                     }}

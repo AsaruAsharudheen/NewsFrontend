@@ -10,7 +10,7 @@ const HomeTicker = () => {
   useEffect(() => {
     const fetchTickerNews = async () => {
       try {
-        const res = await axios.get('http://localhost:8889/api/News');
+        const res = await axios.get('https://newsbackend-73b7.onrender.com/api/News');
         setNews(res.data.slice(0, 20)); // show first 20
       } catch (err) {
         console.error('Failed to fetch ticker news:', err);
@@ -22,7 +22,7 @@ const HomeTicker = () => {
   return (
     <div className="ticker-wrapper">
       <div className="ticker-content">
-        {news.map(item => (
+        {news.map((item) => (
           <div
             key={item._id}
             className="ticker-card"
@@ -33,10 +33,15 @@ const HomeTicker = () => {
                 item.images && item.images.length > 0
                   ? item.images[0].startsWith('http')
                     ? item.images[0]
-                    : `http://localhost:8889/${item.images[0]}`
-                  : 'http://localhost:8889/images/no-image.jpg'
+                    : `https://newsbackend-73b7.onrender.com/${item.images[0]}`
+                  : 'https://newsbackend-73b7.onrender.com/images/no-image.jpg'
               }
               alt={item.title}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src =
+                  'https://newsbackend-73b7.onrender.com/images/no-image.jpg';
+              }}
             />
             <div className="ticker-text">
               <div className="ticker-category">{item.category || 'General'}</div>

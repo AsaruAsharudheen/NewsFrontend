@@ -1,7 +1,7 @@
 import './home.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Typography, Spin, Empty, Divider } from 'antd';
+import { Spin, Empty, Divider } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import Navbar from '../Navbar/navbar';
@@ -13,24 +13,18 @@ import About from '../About/about';
 import HomeEducation from '../HomeEducation/homeducation';
 import HomeTicker from '../HomeTicker/hometicker';
 
-const { Title } = Typography;
+// ✅ Consistent BASE_URL
+const BASE_URL = 'https://newsbackend-73b7.onrender.com';
 
 const Home = () => {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const today = new Date().toLocaleDateString('en-IN', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const res = await axios.get('http://localhost:8889/api/News');
+        const res = await axios.get(`${BASE_URL}/api/News`);
         setNews(res.data);
       } catch (err) {
         console.error('Failed to fetch news', err);
@@ -45,7 +39,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-<HomeTicker/>
+      <HomeTicker />
       <HomeLatest />
       <HomePolitics />
       <HomSports />
@@ -54,9 +48,7 @@ const Home = () => {
 
       <div className="home-section">
         <div className="business-heading-row">
-          <h1 className="business-section-title">
-            ALLNEWS
-          </h1>
+          <h1 className="business-section-title">ALLNEWS</h1>
           <span className="heading-line"></span>
         </div>
         <Divider />
@@ -81,10 +73,14 @@ const Home = () => {
                     item.images && item.images.length > 0
                       ? item.images[0].startsWith('http')
                         ? item.images[0]
-                        : `http://localhost:8889/${item.images[0]}`
-                      : 'http://localhost:8889/images/no-image.jpg'
+                        : `${BASE_URL}/${item.images[0]}`
+                      : `${BASE_URL}/images/no-image.jpg`
                   }
                   className="home-news-image"
+                  onError={e => {
+                    e.target.onerror = null;
+                    e.target.src = `${BASE_URL}/images/no-image.jpg`;
+                  }}
                 />
                 <div className="home-news-content">
                   <div className="home-news-category">
