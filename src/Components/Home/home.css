@@ -1,3 +1,5 @@
+
+
 .home-section {
   padding: 10px 12%;
   background-color: #fff;
@@ -106,7 +108,7 @@
 
 @media (max-width: 600px) {
   .home-section {
- padding: 2px;
+    padding: 2px;
   }
 
   .home-news-listing {
@@ -142,6 +144,8 @@
   }
 
   .home-news-date {
-    font-size: 11px;
+    font-size: 14px;
+    color: #0f0d0d;
+    font-weight: bolder;
   }
 }

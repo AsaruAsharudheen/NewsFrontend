@@ -101,6 +101,8 @@ body {
   flex-direction: column;
   gap: 18px;
   margin-top: 10px;
+  font-family: 'Anek Malayalam', sans-serif;
+
 }
 
 .home-latest-right-card {
@@ -178,7 +180,7 @@ body {
 }
 
 .home-latest-bottom-content {
-  padding: 14px 16px;
+  padding: 10px 16px;
 }
 
 .home-latest-bottom-category {
@@ -295,6 +297,6 @@ body {
   .home-latest-bottom-title {
     font-size: 14px;
     -webkit-line-clamp: 3;
-    min-height: 60px;
+    /* min-height: 60px; */
   }
 }
